@@ -3,11 +3,18 @@ const express = require('express');
 const connection = require('./config/database');
 const configViewEngine = require('./config/viewEngine')
 const apiRoutes = require('./routes/apiV1');
+const cors = require('cors')
+const fileUpload = require('express-fileupload');
 
 // import express from "express"
 const app = express();
 const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
+
+app.use(cors({ origin: true }))
+
+// default options
+app.use(fileUpload());
 
 //config req.body
 app.use(express.json()); // for json

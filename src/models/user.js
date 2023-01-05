@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema(
         username: String,
         email: String,
         image: String,
+        imageB64: String
     },
     {
         timestamps: true, // createdAt, updatedAt

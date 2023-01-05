@@ -3,12 +3,13 @@ const {
 } = require('../services/userService');
 
 const getUser = async (req, res) => {
-    let users = await getUserService();
+    let users = await getUserService(req.query);
     if (users) {
         return res.status(200).json({
             EC: 0,
-            data: users,
-            mes: 'Get all user'
+            data: users.result,
+            mes: 'Get all user',
+            totalPage: users.totalPage
         })
     } else {
         return res.status(200).json({
@@ -20,7 +21,7 @@ const getUser = async (req, res) => {
 }
 
 const postUser = async (req, res) => {
-    let user = await postUserService(req.body);
+    let user = await postUserService(req.body, req.files);
     if (user) {
         return res.status(200).json({
             EC: 0,
@@ -37,7 +38,7 @@ const postUser = async (req, res) => {
 }
 
 const putUser = async (req, res) => {
-    let result = await putUserService(req.body);
+    let result = await putUserService(req.body, req.files);
     if (result) {
         return res.status(200).json({
             EC: 0,
@@ -54,7 +55,7 @@ const putUser = async (req, res) => {
 }
 
 const deleteUser = async (req, res) => {
-    let id = req.body.id
+    let id = req.params.id
     let result = await deleteUserService(id);
     if (result) {
         return res.status(200).json({

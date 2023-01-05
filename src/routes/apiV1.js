@@ -16,7 +16,7 @@ const {
 routerAPI.get('/users', getUser);
 routerAPI.post('/users', postUser);
 routerAPI.put('/users', putUser);
-routerAPI.delete('/users', deleteUser);
+routerAPI.delete('/users/:id', deleteUser);
 
 routerAPI.get('/quizzes', getQuiz);
 routerAPI.post('/quizzes', postQuiz);
