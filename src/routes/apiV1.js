@@ -21,7 +21,7 @@ routerAPI.delete('/users/:id', deleteUser);
 routerAPI.get('/quizzes', getQuiz);
 routerAPI.post('/quizzes', postQuiz);
 routerAPI.put('/quizzes', putQuiz);
-routerAPI.delete('/quizzes', deleteQuiz);
+routerAPI.delete('/quizzes/:id', deleteQuiz);
 
 routerAPI.get('/questions', getQuestion);
 routerAPI.post('/questions', postQuestion);

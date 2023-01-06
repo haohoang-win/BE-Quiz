@@ -1,7 +1,7 @@
 const path = require('path')
 
-const uploadSingleFile = async (fileObject) => {
-    let uploadPath = path.resolve(__dirname, '../public/images/user');
+const uploadSingleFile = async (fileObject, file) => {
+    let uploadPath = path.resolve(__dirname, `../public/images/${file}`);
     // get image extension name
     let extName = path.extname(fileObject.name)
     // get image name(without extension)

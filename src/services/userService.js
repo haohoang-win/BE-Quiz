@@ -11,7 +11,7 @@ const getUserService = async (queryString) => {
         let result = await User.find(filter).populate(population).skip(offset).limit(limit).exec();
         let users = await User.find({});
         let totalUser = users.length;
-        let totalPage = (totalUser & 1) ? ((totalUser + 1) / limit) : (totalUser / limit)
+        let totalPage = (totalUser % limit) === 0 ? (totalUser / limit) : (parseInt(totalUser / limit) + 1)
         return { result, totalPage };
     } catch (error) {
         console.log(error);
@@ -23,7 +23,7 @@ const postUserService = async (dataUser, file) => {
     try {
         let imageUpload = '';
         if (!!file) {
-            imageUpload = await uploadSingleFile(file.image)
+            imageUpload = await uploadSingleFile(file.image, 'users')
         }
         let result = await User.create({
             username: dataUser.username,
@@ -42,7 +42,7 @@ const putUserService = async (dataUpdateUser, file) => {
     try {
         let imageUpload = '';
         if (!!file) {
-            imageUpload = await uploadSingleFile(file.image)
+            imageUpload = await uploadSingleFile(file.image, 'users')
         }
         let data = {};
         let { id, username, imageB64 } = dataUpdateUser;

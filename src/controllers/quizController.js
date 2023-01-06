@@ -3,12 +3,13 @@ const {
 } = require('../services/quizService');
 
 const getQuiz = async (req, res) => {
-    let quizzes = await getQuizService();
+    let quizzes = await getQuizService(req.query);
     if (quizzes) {
         return res.status(200).json({
             EC: 0,
-            data: quizzes,
-            mes: 'Get all quiz'
+            data: quizzes.result,
+            mes: 'Get all quiz',
+            totalPage: quizzes.totalPage
         })
     } else {
         return res.status(200).json({
@@ -20,7 +21,7 @@ const getQuiz = async (req, res) => {
 }
 
 const postQuiz = async (req, res) => {
-    let quiz = await postQuizService(req.body);
+    let quiz = await postQuizService(req.body, req.files);
     if (quiz) {
         return res.status(200).json({
             EC: 0,
@@ -37,7 +38,7 @@ const postQuiz = async (req, res) => {
 }
 
 const putQuiz = async (req, res) => {
-    let result = await putQuizService(req.body);
+    let result = await putQuizService(req.body, req.files);
     if (result) {
         return res.status(200).json({
             EC: 0,
@@ -54,7 +55,7 @@ const putQuiz = async (req, res) => {
 }
 
 const deleteQuiz = async (req, res) => {
-    let id = req.body.id
+    let id = req.params.id
     let result = await deleteQuizService(id);
     if (result) {
         return res.status(200).json({
