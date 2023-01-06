@@ -8,6 +8,7 @@ const quizSchema = new mongoose.Schema(
         difficulty: String,
         image: String,
         imageB64: String,
+        questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'question' }],
     },
     {
         timestamps: true, // createdAt, updatedAt

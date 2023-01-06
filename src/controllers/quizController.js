@@ -9,7 +9,7 @@ const getQuiz = async (req, res) => {
             EC: 0,
             data: quizzes.result,
             mes: 'Get all quiz',
-            totalPage: quizzes.totalPage
+            totalPage: quizzes.totalPage ? quizzes.totalPage : 'ALL'
         })
     } else {
         return res.status(200).json({
