@@ -20,7 +20,7 @@ const getQuestion = async (req, res) => {
 }
 
 const postQuestion = async (req, res) => {
-    let question = await postQuestionService(req.body);
+    let question = await postQuestionService(req.body, req.files);
     if (question) {
         return res.status(200).json({
             EC: 0,

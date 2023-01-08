@@ -1,5 +1,5 @@
 const {
-    postAnswerService, getAnswerService, putAnswerService, deleteAnswerService
+    postAnswerService, getAnswerService, putAnswerService, deleteAnswerService, getAnswerByIdService
 } = require('../services/answerService');
 
 const getAnswer = async (req, res) => {
@@ -71,6 +71,15 @@ const deleteAnswer = async (req, res) => {
     }
 }
 
+const getAnswerByID = async (req, res) => {
+    let id = req.params.id
+    let result = await getAnswerByIdService(id)
+    return res.status(200).json({
+        EC: 0,
+        data: result,
+    })
+}
+
 module.exports = {
-    getAnswer, postAnswer, putAnswer, deleteAnswer
+    getAnswer, postAnswer, putAnswer, deleteAnswer, getAnswerByID
 }

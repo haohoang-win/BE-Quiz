@@ -5,7 +5,9 @@ const questionSchema = new mongoose.Schema(
     {
         description: String,
         image: String,
+        imageB64: String,
         difficulty: String,
+        answers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'answer' }],
     },
     {
         timestamps: true, // createdAt, updatedAt

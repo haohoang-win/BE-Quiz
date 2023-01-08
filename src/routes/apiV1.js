@@ -10,7 +10,7 @@ const {
     getQuestion, postQuestion, putQuestion, deleteQuestion
 } = require('../controllers/questionController')
 const {
-    getAnswer, postAnswer, putAnswer, deleteAnswer
+    getAnswer, postAnswer, putAnswer, deleteAnswer, getAnswerByID
 } = require('../controllers/answerController')
 
 routerAPI.get('/users', getUser);
@@ -29,6 +29,7 @@ routerAPI.put('/questions', putQuestion);
 routerAPI.delete('/questions', deleteQuestion);
 
 routerAPI.get('/answers', getAnswer);
+routerAPI.get('/answers/:id', getAnswerByID);
 routerAPI.post('/answers', postAnswer);
 routerAPI.put('/answers', putAnswer);
 routerAPI.delete('/answers', deleteAnswer);

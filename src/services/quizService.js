@@ -1,6 +1,8 @@
 const Quiz = require('../models/quiz');
 const { uploadSingleFile } = require('./fileService')
 const aqp = require('api-query-params');
+const { getAnswerByIdService } = require('./answerService');
+const _ = require('lodash')
 
 const getQuizService = async (queryString) => {
     try {
@@ -21,18 +23,49 @@ const getQuizService = async (queryString) => {
 
 const postQuizService = async (dataQuiz, file) => {
     try {
-        let imageUpload = '';
-        if (!!file) {
-            imageUpload = await uploadSingleFile(file.image, 'quizzes')
+        if (!dataQuiz.type) {
+            let imageUpload = '';
+            if (!!file) {
+                imageUpload = await uploadSingleFile(file.image, 'quizzes')
+            }
+            let result = await Quiz.create({
+                name: dataQuiz.name,
+                description: dataQuiz.description,
+                difficulty: dataQuiz.difficulty,
+                image: imageUpload,
+                imageB64: dataQuiz.imageB64,
+            });
+            return result;
         }
-        let result = await Quiz.create({
-            name: dataQuiz.name,
-            description: dataQuiz.description,
-            difficulty: dataQuiz.difficulty,
-            image: imageUpload,
-            imageB64: dataQuiz.imageB64,
-        });
-        return result;
+        if (dataQuiz.type = 'AR-Q') {
+            let indexDelete = -1;
+            let index = -1;
+            let myQuiz = await Quiz.findById(dataQuiz.quizId).exec();
+            let lengthQuestion = myQuiz.questions.length;
+            const myQuizClone = _.cloneDeep(myQuiz);
+            if (lengthQuestion < dataQuiz.arrQuestionId.length) {
+                index = lengthQuestion
+            }
+            for (let i = 0; i < lengthQuestion; i++) {
+                if (myQuiz.questions[i].toString() !== dataQuiz.arrQuestionId[i]) {
+                    indexDelete = i;
+                    index = i;
+                    i = lengthQuestion
+                }
+            }
+            if (indexDelete > -1) {
+                for (let i = indexDelete; i < lengthQuestion; i++) {
+                    myQuiz.questions.pull(myQuizClone.questions[i]);
+                }
+            }
+            if (index > -1) {
+                for (let i = index; i < dataQuiz.arrQuestionId.length; i++) {
+                    myQuiz.questions.push(dataQuiz.arrQuestionId[i]);
+                }
+            }
+            let result = await myQuiz.save()
+            return result;
+        }
     } catch (error) {
         console.log(error);
         return null;

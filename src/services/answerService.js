@@ -25,8 +25,8 @@ const postAnswerService = async (dataAnswer) => {
 
 const putAnswerService = async (dataUpdateAnswer) => {
     try {
-        let { id, description, isCorrect } = dataUpdateAnswer
-        let result = await Answer.updateOne({ _id: id }, { description, isCorrect });
+        let { _id, description, isCorrect } = dataUpdateAnswer
+        let result = await Answer.updateOne({ _id: _id }, { description, isCorrect });
         return result;
     } catch (error) {
         console.log(error);
@@ -44,9 +44,20 @@ const deleteAnswerService = async (id) => {
     }
 }
 
+const getAnswerByIdService = async (id) => {
+    try {
+        let result = await Answer.findById(id)
+        return result;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
 module.exports = {
     getAnswerService,
     postAnswerService,
     putAnswerService,
-    deleteAnswerService
+    deleteAnswerService,
+    getAnswerByIdService
 }
