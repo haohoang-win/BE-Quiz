@@ -1,7 +1,6 @@
 const Quiz = require('../models/quiz');
 const { uploadSingleFile } = require('./fileService')
 const aqp = require('api-query-params');
-const { getAnswerByIdService } = require('./answerService');
 const _ = require('lodash')
 
 const getQuizService = async (queryString) => {
@@ -15,6 +14,17 @@ const getQuizService = async (queryString) => {
         let totalQuiz = quizzes.length;
         let totalPage = (totalQuiz % limit) === 0 ? (totalQuiz / limit) : (parseInt(totalQuiz / limit) + 1)
         return { result, totalPage };
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+const getQuizByIdService = async (quizId, queryString) => {
+    try {
+        const { population } = aqp(queryString);
+        let result = await Quiz.findById(quizId).populate(population).exec();
+        return result;
     } catch (error) {
         console.log(error);
         return null;
@@ -105,6 +115,7 @@ const deleteQuizService = async (id) => {
 
 module.exports = {
     getQuizService,
+    getQuizByIdService,
     postQuizService,
     putQuizService,
     deleteQuizService

@@ -4,7 +4,7 @@ const {
     getUser, postUser, putUser, deleteUser
 } = require('../controllers/userController')
 const {
-    getQuiz, postQuiz, putQuiz, deleteQuiz
+    getQuiz, getQuizById, postQuiz, putQuiz, deleteQuiz
 } = require('../controllers/quizController')
 const {
     getQuestion, postQuestion, putQuestion, deleteQuestion
@@ -19,6 +19,7 @@ routerAPI.put('/users', putUser);
 routerAPI.delete('/users/:id', deleteUser);
 
 routerAPI.get('/quizzes', getQuiz);
+routerAPI.get('/quizzes/:id', getQuizById);
 routerAPI.post('/quizzes', postQuiz);
 routerAPI.put('/quizzes', putQuiz);
 routerAPI.delete('/quizzes/:id', deleteQuiz);

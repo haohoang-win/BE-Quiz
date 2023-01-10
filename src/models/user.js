@@ -6,7 +6,8 @@ const userSchema = new mongoose.Schema(
         username: String,
         email: String,
         image: String,
-        imageB64: String
+        imageB64: String,
+        quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'quiz' }]
     },
     {
         timestamps: true, // createdAt, updatedAt

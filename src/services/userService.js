@@ -4,14 +4,20 @@ const aqp = require('api-query-params');
 
 const getUserService = async (queryString) => {
     try {
+        let result, totalPage;
         const page = queryString.page;
         const { filter, limit, population } = aqp(queryString);
         delete filter.page;
         let offset = (page - 1) * limit;
-        let result = await User.find(filter).populate(population).skip(offset).limit(limit).exec();
-        let users = await User.find({});
-        let totalUser = users.length;
-        let totalPage = (totalUser % limit) === 0 ? (totalUser / limit) : (parseInt(totalUser / limit) + 1)
+        if (!queryString.id) {
+            result = await User.find(filter).populate(population).skip(offset).limit(limit).exec();
+            let users = await User.find({});
+            let totalUser = users.length;
+            totalPage = (totalUser % limit) === 0 ? (totalUser / limit) : (parseInt(totalUser / limit) + 1)
+        } else {
+            result = await User.find(filter).populate(population).exec();
+            totalPage = 1;
+        }
         return { result, totalPage };
     } catch (error) {
         console.log(error);
@@ -21,17 +27,25 @@ const getUserService = async (queryString) => {
 
 const postUserService = async (dataUser, file) => {
     try {
-        let imageUpload = '';
-        if (!!file) {
-            imageUpload = await uploadSingleFile(file.image, 'users')
+        if (!dataUser.type) {
+            let imageUpload = '';
+            if (!!file) {
+                imageUpload = await uploadSingleFile(file.image, 'users')
+            }
+            let result = await User.create({
+                username: dataUser.username,
+                email: dataUser.email,
+                image: imageUpload,
+                imageB64: dataUser.imageB64
+            });
+            return result;
         }
-        let result = await User.create({
-            username: dataUser.username,
-            email: dataUser.email,
-            image: imageUpload,
-            imageB64: dataUser.imageB64
-        });
-        return result;
+        if (dataUser.type === 'AR-QZ') {
+            let user = await User.findById(dataUser.userId).exec();
+            user.quizzes = [...user.quizzes, dataUser.quizId]
+            let result = await user.save()
+            return result;
+        }
     } catch (error) {
         console.log(error);
         return null;
