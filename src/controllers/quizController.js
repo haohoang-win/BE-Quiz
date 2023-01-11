@@ -1,5 +1,5 @@
 const {
-    postQuizService, getQuizService, getQuizByIdService, putQuizService, deleteQuizService
+    postQuizService, getQuizService, getQuizByIdService, putQuizService, deleteQuizService, submitQuizService
 } = require('../services/quizService');
 
 const getQuiz = async (req, res) => {
@@ -37,7 +37,7 @@ const getQuizById = (req, res) => {
                 mes: 'Can not get quiz by id from database'
             })
         }
-    }, 3000)
+    }, 1000)
 }
 
 const postQuiz = async (req, res) => {
@@ -92,6 +92,23 @@ const deleteQuiz = async (req, res) => {
     }
 }
 
+const submitQuiz = async (req, res) => {
+    let result = await submitQuizService(req.body, req.query);
+    if (result) {
+        return res.status(200).json({
+            EC: 0,
+            data: result,
+            mes: `You've submitted.`
+        })
+    } else {
+        return res.status(200).json({
+            EC: -1,
+            data: result,
+            mes: `Can't access to database`
+        })
+    }
+}
+
 module.exports = {
-    getQuiz, getQuizById, postQuiz, putQuiz, deleteQuiz
+    getQuiz, getQuizById, postQuiz, putQuiz, deleteQuiz, submitQuiz
 }

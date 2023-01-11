@@ -4,10 +4,10 @@ const {
     getUser, postUser, putUser, deleteUser
 } = require('../controllers/userController')
 const {
-    getQuiz, getQuizById, postQuiz, putQuiz, deleteQuiz
+    getQuiz, getQuizById, postQuiz, putQuiz, deleteQuiz, submitQuiz
 } = require('../controllers/quizController')
 const {
-    getQuestion, postQuestion, putQuestion, deleteQuestion
+    getQuestion, getQuestionById, postQuestion, putQuestion, deleteQuestion
 } = require('../controllers/questionController')
 const {
     getAnswer, postAnswer, putAnswer, deleteAnswer, getAnswerByID
@@ -25,6 +25,7 @@ routerAPI.put('/quizzes', putQuiz);
 routerAPI.delete('/quizzes/:id', deleteQuiz);
 
 routerAPI.get('/questions', getQuestion);
+routerAPI.get('/questions/:id', getQuestionById);
 routerAPI.post('/questions', postQuestion);
 routerAPI.put('/questions', putQuestion);
 routerAPI.delete('/questions', deleteQuestion);
@@ -34,5 +35,7 @@ routerAPI.get('/answers/:id', getAnswerByID);
 routerAPI.post('/answers', postAnswer);
 routerAPI.put('/answers', putAnswer);
 routerAPI.delete('/answers', deleteAnswer);
+
+routerAPI.post('/submit-quiz', submitQuiz);
 
 module.exports = routerAPI;

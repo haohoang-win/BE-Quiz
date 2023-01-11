@@ -7,6 +7,7 @@ const questionSchema = new mongoose.Schema(
         image: String,
         imageB64: String,
         difficulty: String,
+        answerDescription: [{ type: String, required: false }],
         answers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'answer' }],
     },
     {

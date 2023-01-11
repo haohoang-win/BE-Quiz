@@ -2,9 +2,19 @@ const Question = require('../models/question');
 const { uploadSingleFile } = require('./fileService')
 const _ = require('lodash')
 
-const getQuestionService = async () => {
+const getQuestionService = async (id) => {
     try {
         let result = await Question.find({});
+        return result;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+const getQuestionByIdService = async (id) => {
+    try {
+        let result = await Question.findById(id);
         return result;
     } catch (error) {
         console.log(error);
@@ -21,11 +31,14 @@ const postQuestionService = async (dataQuestion, file) => {
             }
             let objAnswers = `[${dataQuestion.answers}]`
             objAnswers = objAnswers.replace(/\[|\]/g, '').split(',');
+            let objAnswersDescription = `[${dataQuestion.answersDescription}]`
+            objAnswersDescription = objAnswersDescription.replace(/\[|\]/g, '').split(',');
             let result = await Question.create({
                 description: dataQuestion.description,
                 difficulty: dataQuestion.difficulty,
                 image: imageUpload,
                 imageB64: dataQuestion.imageB64,
+                answerDescription: objAnswersDescription,
                 answers: objAnswers
             });
             return result = result;
@@ -40,6 +53,7 @@ const postQuestionService = async (dataQuestion, file) => {
                 index = lengthAnswer
             }
             myQuestion.description = dataQuestion.description;
+            myQuestion.answerDescription = dataQuestion.answersDescription;
             if (!!dataQuestion.imageB64) {
                 let imageUpload = await uploadSingleFile(file.image, 'questions')
                 myQuestion.image = imageUpload;
@@ -94,6 +108,7 @@ const deleteQuestionService = async (id) => {
 
 module.exports = {
     getQuestionService,
+    getQuestionByIdService,
     postQuestionService,
     putQuestionService,
     deleteQuestionService

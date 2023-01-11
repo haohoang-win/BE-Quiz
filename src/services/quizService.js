@@ -113,10 +113,32 @@ const deleteQuizService = async (id) => {
     }
 }
 
+const submitQuizService = async (dataSubmit, queryString) => {
+    try {
+        const { population } = aqp(queryString);
+        const { id } = dataSubmit
+        let myQuiz = await Quiz.findById(id).populate(population).exec();
+        let arrQuestion = myQuiz.questions;
+        let resultSubmit = arrQuestion.map(question => {
+            if (question && question.answers && question.answers.length > 0) {
+                let index = question.answers.findIndex(answer => answer.isCorrect === true);
+                return index;
+            } else {
+                return -1;
+            }
+        })
+        return resultSubmit;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
 module.exports = {
     getQuizService,
     getQuizByIdService,
     postQuizService,
     putQuizService,
-    deleteQuizService
+    deleteQuizService,
+    submitQuizService
 }

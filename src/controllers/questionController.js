@@ -1,9 +1,26 @@
 const {
-    postQuestionService, getQuestionService, putQuestionService, deleteQuestionService
+    postQuestionService, getQuestionService, getQuestionByIdService, putQuestionService, deleteQuestionService
 } = require('../services/questionService');
 
 const getQuestion = async (req, res) => {
     let questions = await getQuestionService();
+    if (questions) {
+        return res.status(200).json({
+            EC: 0,
+            data: questions,
+            mes: 'Get all question'
+        })
+    } else {
+        return res.status(200).json({
+            EC: -1,
+            data: questions,
+            mes: 'Can not get all question from database'
+        })
+    }
+}
+
+const getQuestionById = async (req, res) => {
+    let questions = await getQuestionByIdService(req.params.id)
     if (questions) {
         return res.status(200).json({
             EC: 0,
@@ -72,5 +89,5 @@ const deleteQuestion = async (req, res) => {
 }
 
 module.exports = {
-    getQuestion, postQuestion, putQuestion, deleteQuestion
+    getQuestion, getQuestionById, postQuestion, putQuestion, deleteQuestion
 }
