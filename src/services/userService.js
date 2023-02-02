@@ -1,6 +1,14 @@
 const User = require('../models/user');
 const { uploadSingleFile } = require('./fileService')
 const aqp = require('api-query-params');
+const bcrypt = require('bcryptjs')
+
+var salt = bcrypt.genSaltSync(10);
+
+const hashUserPassword = (userPassword) => {
+    var hashPassword = bcrypt.hashSync(userPassword, salt);
+    return hashPassword;
+}
 
 const getUserService = async (queryString) => {
     try {
@@ -41,12 +49,14 @@ const postUserService = async (dataUser, file) => {
             if (!!file) {
                 imageUpload = await uploadSingleFile(file.image, 'users')
             }
+            let hashPassword = hashUserPassword('123456')
             let result = await User.create({
                 username: dataUser.username,
                 email: dataUser.email,
                 image: imageUpload,
                 imageB64: dataUser.imageB64,
-                role: dataUser.role
+                role: dataUser.role,
+                password: hashPassword
             });
             return {
                 EM: 'Create a user success',

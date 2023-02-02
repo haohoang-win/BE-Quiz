@@ -12,6 +12,12 @@ const {
 const {
     getAnswer, postAnswer, putAnswer, deleteAnswer, getAnswerByID
 } = require('../controllers/answerController')
+const {
+    handleRegister, handleLogin
+} = require('../controllers/loginRegisterController')
+
+routerAPI.post('/register', handleRegister);
+routerAPI.post('/login', handleLogin);
 
 routerAPI.get('/users', getUser);
 routerAPI.post('/users', postUser);
