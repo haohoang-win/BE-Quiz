@@ -7,15 +7,15 @@ const getQuiz = async (req, res) => {
     if (quizzes) {
         return res.status(200).json({
             EC: 0,
-            data: quizzes.result,
-            mes: 'Get all quiz',
+            DT: quizzes.result,
+            EM: 'Get all quiz',
             totalPage: quizzes.totalPage ? quizzes.totalPage : 'ALL'
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: quizzes,
-            mes: 'Can not get all quiz from database'
+            DT: quizzes,
+            EM: 'Can not get all quiz from database'
         })
     }
 }
@@ -27,14 +27,14 @@ const getQuizById = (req, res) => {
         if (result) {
             return res.status(200).json({
                 EC: 0,
-                data: result,
-                mes: 'Get quiz by id',
+                DT: result,
+                EM: 'Get quiz by id',
             })
         } else {
             return res.status(200).json({
                 EC: -1,
-                data: result,
-                mes: 'Can not get quiz by id from database'
+                DT: result,
+                EM: 'Can not get quiz by id from database'
             })
         }
     }, 1000)
@@ -45,14 +45,14 @@ const postQuiz = async (req, res) => {
     if (quiz) {
         return res.status(200).json({
             EC: 0,
-            data: quiz,
-            mes: 'Create a quiz success'
+            DT: quiz,
+            EM: 'Create a quiz success'
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: quiz,
-            mes: 'Can not create a quiz from database'
+            DT: quiz,
+            EM: 'Can not create a quiz from database'
         })
     }
 }
@@ -62,14 +62,14 @@ const putQuiz = async (req, res) => {
     if (result) {
         return res.status(200).json({
             EC: 0,
-            data: result,
-            mes: 'Update a quiz success'
+            DT: result,
+            EM: 'Update a quiz success'
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: result,
-            mes: 'Can not update a quiz from database'
+            DT: result,
+            EM: 'Can not update a quiz from database'
         })
     }
 }
@@ -80,14 +80,14 @@ const deleteQuiz = async (req, res) => {
     if (result) {
         return res.status(200).json({
             EC: 0,
-            data: result,
-            mes: 'Delete a quiz success'
+            DT: result,
+            EM: 'Delete a quiz success'
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: result,
-            mes: 'Can not delete a quiz from database'
+            DT: result,
+            EM: 'Can not delete a quiz from database'
         })
     }
 }
@@ -97,14 +97,14 @@ const submitQuiz = async (req, res) => {
     if (result) {
         return res.status(200).json({
             EC: 0,
-            data: result,
-            mes: `You've submitted.`
+            DT: result,
+            EM: `You've submitted.`
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: result,
-            mes: `Can't access to database`
+            DT: result,
+            EM: `Can't access to database`
         })
     }
 }

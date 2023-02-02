@@ -18,10 +18,19 @@ const getUserService = async (queryString) => {
             result = await User.find(filter).populate(population).exec();
             totalPage = 1;
         }
-        return { result, totalPage };
+        return ({
+            EC: 0,
+            DT: result,
+            EM: 'Get all user',
+            totalPage: totalPage
+        })
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 
@@ -36,19 +45,32 @@ const postUserService = async (dataUser, file) => {
                 username: dataUser.username,
                 email: dataUser.email,
                 image: imageUpload,
-                imageB64: dataUser.imageB64
+                imageB64: dataUser.imageB64,
+                role: dataUser.role
             });
-            return result;
+            return {
+                EM: 'Create a user success',
+                EC: 0,
+                DT: result
+            };
         }
         if (dataUser.type === 'AR-QZ') {
             let user = await User.findById(dataUser.userId).exec();
             user.quizzes = [...user.quizzes, dataUser.quizId]
             let result = await user.save()
-            return result;
+            return {
+                EM: 'Create a user success',
+                EC: 0,
+                DT: result
+            };
         }
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 
@@ -59,27 +81,44 @@ const putUserService = async (dataUpdateUser, file) => {
             imageUpload = await uploadSingleFile(file.image, 'users')
         }
         let data = {};
-        let { id, username, imageB64 } = dataUpdateUser;
+        let { id, username, imageB64, role } = dataUpdateUser;
         data.username = username;
+        data.role = role;
         if (imageB64) {
             data.image = imageUpload;
             data.imageB64 = imageB64;
         }
         let result = await User.updateOne({ _id: id }, data);
-        return result;
+        return {
+            EM: 'Update a user success',
+            EC: 0,
+            DT: result
+        };
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 
 const deleteUserService = async (id) => {
     try {
         let result = await User.deleteById(id)
-        return result;
+        return {
+            EC: 0,
+            DT: result,
+            EM: 'Delete a user success'
+        };
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 

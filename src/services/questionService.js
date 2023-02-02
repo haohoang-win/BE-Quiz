@@ -8,7 +8,11 @@ const getQuestionService = async (id) => {
         return result;
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 
@@ -18,7 +22,11 @@ const getQuestionByIdService = async (id) => {
         return result;
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 
@@ -81,7 +89,11 @@ const postQuestionService = async (dataQuestion, file) => {
         }
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 
@@ -92,7 +104,11 @@ const putQuestionService = async (dataUpdateQuestion) => {
         return result;
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 
@@ -102,7 +118,11 @@ const deleteQuestionService = async (id) => {
         return result;
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 

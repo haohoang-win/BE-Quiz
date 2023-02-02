@@ -7,14 +7,14 @@ const getQuestion = async (req, res) => {
     if (questions) {
         return res.status(200).json({
             EC: 0,
-            data: questions,
-            mes: 'Get all question'
+            DT: questions,
+            EM: 'Get all question'
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: questions,
-            mes: 'Can not get all question from database'
+            DT: questions,
+            EM: 'Can not get all question from database'
         })
     }
 }
@@ -24,14 +24,14 @@ const getQuestionById = async (req, res) => {
     if (questions) {
         return res.status(200).json({
             EC: 0,
-            data: questions,
-            mes: 'Get all question'
+            DT: questions,
+            EM: 'Get all question'
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: questions,
-            mes: 'Can not get all question from database'
+            DT: questions,
+            EM: 'Can not get all question from database'
         })
     }
 }
@@ -41,14 +41,14 @@ const postQuestion = async (req, res) => {
     if (question) {
         return res.status(200).json({
             EC: 0,
-            data: question,
-            mes: 'Create a question success'
+            DT: question,
+            EM: 'Create a question success'
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: question,
-            mes: 'Can not create a question from database'
+            DT: question,
+            EM: 'Can not create a question from database'
         })
     }
 }
@@ -58,14 +58,14 @@ const putQuestion = async (req, res) => {
     if (result) {
         return res.status(200).json({
             EC: 0,
-            data: result,
-            mes: 'Update a question success'
+            DT: result,
+            EM: 'Update a question success'
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: result,
-            mes: 'Can not update a question from database'
+            DT: result,
+            EM: 'Can not update a question from database'
         })
     }
 }
@@ -76,14 +76,14 @@ const deleteQuestion = async (req, res) => {
     if (result) {
         return res.status(200).json({
             EC: 0,
-            data: result,
-            mes: 'Delete a question success'
+            DT: result,
+            EM: 'Delete a question success'
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: result,
-            mes: 'Can not delete a question from database'
+            DT: result,
+            EM: 'Can not delete a question from database'
         })
     }
 }

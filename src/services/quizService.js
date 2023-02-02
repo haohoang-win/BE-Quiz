@@ -16,7 +16,11 @@ const getQuizService = async (queryString) => {
         return { result, totalPage };
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 
@@ -27,7 +31,11 @@ const getQuizByIdService = async (quizId, queryString) => {
         return result;
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 
@@ -78,7 +86,11 @@ const postQuizService = async (dataQuiz, file) => {
         }
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 
@@ -99,7 +111,11 @@ const putQuizService = async (dataUpdateQuiz, file) => {
         return result;
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 
@@ -109,7 +125,11 @@ const deleteQuizService = async (id) => {
         return result;
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 
@@ -130,7 +150,11 @@ const submitQuizService = async (dataSubmit, queryString) => {
         return resultSubmit;
     } catch (error) {
         console.log(error);
-        return null;
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
     }
 }
 

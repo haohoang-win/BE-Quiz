@@ -4,10 +4,13 @@ const mongoose_delete = require('mongoose-delete');
 const userSchema = new mongoose.Schema(
     {
         username: String,
+        password: String,
         email: String,
         image: String,
         imageB64: String,
-        quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'quiz' }]
+        role: String,
+        quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'quiz' }],
+        authors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'quiz' }]
     },
     {
         timestamps: true, // createdAt, updatedAt

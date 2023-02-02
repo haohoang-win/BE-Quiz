@@ -7,14 +7,14 @@ const getAnswer = async (req, res) => {
     if (answers) {
         return res.status(200).json({
             EC: 0,
-            data: answers,
-            mes: 'Get all answer'
+            DT: answers,
+            EM: 'Get all answer'
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: answers,
-            mes: 'Can not get all answer from database'
+            DT: answers,
+            EM: 'Can not get all answer from database'
         })
     }
 }
@@ -24,14 +24,14 @@ const postAnswer = async (req, res) => {
     if (answer) {
         return res.status(200).json({
             EC: 0,
-            data: answer,
-            mes: 'Create a answer success'
+            DT: answer,
+            EM: 'Create a answer success'
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: answer,
-            mes: 'Can not create a answer from database'
+            DT: answer,
+            EM: 'Can not create a answer from database'
         })
     }
 }
@@ -41,14 +41,14 @@ const putAnswer = async (req, res) => {
     if (result) {
         return res.status(200).json({
             EC: 0,
-            data: result,
-            mes: 'Update a answer success'
+            DT: result,
+            EM: 'Update a answer success'
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: result,
-            mes: 'Can not update a answer from database'
+            DT: result,
+            EM: 'Can not update a answer from database'
         })
     }
 }
@@ -59,14 +59,14 @@ const deleteAnswer = async (req, res) => {
     if (result) {
         return res.status(200).json({
             EC: 0,
-            data: result,
-            mes: 'Delete a answer success'
+            DT: result,
+            EM: 'Delete a answer success'
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            data: result,
-            mes: 'Can not delete a answer from database'
+            DT: result,
+            EM: 'Can not delete a answer from database'
         })
     }
 }
@@ -76,7 +76,7 @@ const getAnswerByID = async (req, res) => {
     let result = await getAnswerByIdService(id)
     return res.status(200).json({
         EC: 0,
-        data: result,
+        DT: result,
     })
 }
 
