@@ -48,14 +48,14 @@ const checkUserJWT = (req, res, next) => {
             req.token = token;
             next();
         } else {
-            return res.status(401).json({
+            return res.status(200).json({
                 EC: -1,
                 DT: '',
                 EM: 'Not authenticated the user'
             })
         }
     } else {
-        return res.status(401).json({
+        return res.status(200).json({
             EC: -1,
             DT: '',
             EM: 'Not authenticated the user'

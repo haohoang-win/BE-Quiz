@@ -1,7 +1,7 @@
 const express = require('express')
 const routerAPI = express.Router()
 const {
-    getUser, postUser, putUser, deleteUser
+    getUser, postUser, putUser, deleteUser, getUserAccount
 } = require('../controllers/userController')
 const {
     getQuiz, getQuizById, postQuiz, putQuiz, deleteQuiz, submitQuiz
@@ -13,11 +13,16 @@ const {
     getAnswer, postAnswer, putAnswer, deleteAnswer, getAnswerByID
 } = require('../controllers/answerController')
 const {
-    handleRegister, handleLogin
+    handleRegister, handleLogin, handleLogout
 } = require('../controllers/loginRegisterController')
+const { checkUserJWT } = require('../middleware/JWTAction')
+
+routerAPI.get('*', checkUserJWT)
 
 routerAPI.post('/register', handleRegister);
 routerAPI.post('/login', handleLogin);
+routerAPI.get('/logout', handleLogout);
+routerAPI.get('/account', getUserAccount)
 
 routerAPI.get('/users', getUser);
 routerAPI.post('/users', postUser);

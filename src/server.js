@@ -5,13 +5,19 @@ const configViewEngine = require('./config/viewEngine')
 const apiRoutes = require('./routes/apiV1');
 const cors = require('cors')
 const fileUpload = require('express-fileupload');
+const cookieParser = require('cookie-parser')
+const { configCors } = require('./config/cors')
 
 // import express from "express"
 const app = express();
 const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
 
-app.use(cors({ origin: true }))
+app.use(cors({
+    origin: true,
+    credentials: true,
+}))
+// configCors(app)
 
 // default options
 app.use(fileUpload());
@@ -22,6 +28,8 @@ app.use(express.urlencoded({ extended: true })); // for form data
 
 // config template view engine
 configViewEngine(app);
+
+app.use(cookieParser())
 
 // khai bao route
 app.use('/v1/api/', apiRoutes);
