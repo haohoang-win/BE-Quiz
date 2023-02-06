@@ -3,7 +3,7 @@ const {
 } = require('../services/userService');
 
 const getUser = async (req, res) => {
-    let users = await getUserService(req.query);
+    let users = await getUserService(req.query, req.user);
     if (users) {
         return res.status(200).json({
             EC: users.EC,

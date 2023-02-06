@@ -1,19 +1,30 @@
 const Quiz = require('../models/quiz');
+const User = require('../models/user');
 const { uploadSingleFile } = require('./fileService')
 const aqp = require('api-query-params');
 const _ = require('lodash')
 
-const getQuizService = async (queryString) => {
+const getQuizService = async (queryString, user) => {
     try {
         const page = queryString.page;
         const { filter, limit, population } = aqp(queryString);
         delete filter.page;
         let offset = (page - 1) * limit;
-        let result = await Quiz.find(filter).populate(population).skip(offset).limit(limit).exec();
+        let result = []
+        if (user.role === 'TEACHER') {
+            result = await Quiz.find({ 'author.email': user.email }).populate(population).skip(offset).limit(limit).exec();
+        } else {
+            result = await Quiz.find(filter).populate(population).skip(offset).limit(limit).exec();
+        }
         let quizzes = await Quiz.find({});
         let totalQuiz = quizzes.length;
         let totalPage = (totalQuiz % limit) === 0 ? (totalQuiz / limit) : (parseInt(totalQuiz / limit) + 1)
-        return { result, totalPage };
+        return {
+            EM: 'Get all quiz',
+            EC: 0,
+            DT: result,
+            totalPage
+        }
     } catch (error) {
         console.log(error);
         return {
@@ -39,23 +50,43 @@ const getQuizByIdService = async (quizId, queryString) => {
     }
 }
 
-const postQuizService = async (dataQuiz, file) => {
+const postQuizService = async (dataQuiz, file, user) => {
     try {
         if (!dataQuiz.type) {
             let imageUpload = '';
             if (!!file) {
                 imageUpload = await uploadSingleFile(file.image, 'quizzes')
             }
-            let result = await Quiz.create({
-                name: dataQuiz.name,
-                description: dataQuiz.description,
-                difficulty: dataQuiz.difficulty,
-                image: imageUpload,
-                imageB64: dataQuiz.imageB64,
-            });
-            return result;
+            if (user) {
+                let author = {
+                    username: user.username,
+                    email: user.email,
+                }
+                let result = await Quiz.create({
+                    name: dataQuiz.name,
+                    description: dataQuiz.description,
+                    difficulty: dataQuiz.difficulty,
+                    image: imageUpload,
+                    imageB64: dataQuiz.imageB64,
+                    author: author
+                });
+                let getAuthor = await User.findOne({ email: user.email }).exec();
+                getAuthor.authors = [...getAuthor.authors, result._id]
+                await getAuthor.save()
+                return {
+                    EM: 'Create a quiz success',
+                    EC: 0,
+                    DT: result,
+                }
+            } else {
+                return {
+                    EM: 'Not found user',
+                    EC: 1,
+                    DT: [],
+                }
+            }
         }
-        if (dataQuiz.type = 'AR-Q') {
+        if (dataQuiz.type === 'AR-Q') {
             let indexDelete = -1;
             let index = -1;
             let myQuiz = await Quiz.findById(dataQuiz.quizId).exec();

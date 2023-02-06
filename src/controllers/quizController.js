@@ -3,12 +3,12 @@ const {
 } = require('../services/quizService');
 
 const getQuiz = async (req, res) => {
-    let quizzes = await getQuizService(req.query);
+    let quizzes = await getQuizService(req.query, req.user);
     if (quizzes) {
         return res.status(200).json({
-            EC: 0,
-            DT: quizzes.result,
-            EM: 'Get all quiz',
+            EC: quizzes.EC,
+            DT: quizzes.DT,
+            EM: quizzes.EM,
             totalPage: quizzes.totalPage ? quizzes.totalPage : 'ALL'
         })
     } else {
@@ -41,17 +41,17 @@ const getQuizById = (req, res) => {
 }
 
 const postQuiz = async (req, res) => {
-    let quiz = await postQuizService(req.body, req.files);
+    let quiz = await postQuizService(req.body, req.files, req.user);
     if (quiz) {
         return res.status(200).json({
-            EC: 0,
-            DT: quiz,
-            EM: 'Create a quiz success'
+            EC: quiz.EC,
+            DT: quiz.DT,
+            EM: quiz.EM
         })
     } else {
         return res.status(200).json({
             EC: -1,
-            DT: quiz,
+            DT: [],
             EM: 'Can not create a quiz from database'
         })
     }

@@ -17,7 +17,7 @@ const {
 } = require('../controllers/loginRegisterController')
 const { checkUserJWT } = require('../middleware/JWTAction')
 
-routerAPI.get('*', checkUserJWT)
+routerAPI.all('*', checkUserJWT)
 
 routerAPI.post('/register', handleRegister);
 routerAPI.post('/login', handleLogin);

@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const mongoose_delete = require('mongoose-delete');
 
+const authorSchema = new mongoose.Schema({
+    username: String,
+    email: String
+});
+
 const quizSchema = new mongoose.Schema(
     {
         name: String,
@@ -9,6 +14,7 @@ const quizSchema = new mongoose.Schema(
         image: String,
         imageB64: String,
         questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'question' }],
+        author: authorSchema
     },
     {
         timestamps: true, // createdAt, updatedAt

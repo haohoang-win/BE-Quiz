@@ -10,16 +10,36 @@ const hashUserPassword = (userPassword) => {
     return hashPassword;
 }
 
-const getUserService = async (queryString) => {
+const getUserService = async (queryString, user) => {
     try {
         let result, totalPage;
+        const { getEmail, roleUser } = queryString;
         const page = queryString.page;
         const { filter, limit, population } = aqp(queryString);
         delete filter.page;
         let offset = (page - 1) * limit;
         if (!queryString.id) {
-            result = await User.find(filter).populate(population).skip(offset).limit(limit).exec();
-            let users = await User.find({});
+            if ((user.role === 'MANAGER' || user.role === 'TEACHER') && (roleUser || getEmail)) {
+                result = await User.find({ email: { "$regex": getEmail }, role: { "$regex": roleUser } }).populate(population).skip(offset).limit(limit).exec();
+            }
+            if ((user.role === 'STUDENT' || user.role === 'TEACHER') && !filter.role && !getEmail && !roleUser) {
+                result = await User.findOne({ email: user.email }).populate(population).skip(offset).limit(limit).exec();
+            }
+            if (limit && !roleUser && !getEmail) {
+                result = await User.find(filter).populate(population).skip(offset).limit(limit).exec();
+            }
+            if (!limit && user.role === 'MANAGER' && !filter.role) {
+                result = await User.find({ role: 'TEACHER' }).populate(population).skip(offset).limit(limit).exec();
+            }
+            if (!limit && filter.role) {
+                result = await User.find(filter).populate(population).skip(offset).limit(limit).exec();
+            }
+            let users = null;
+            if (getEmail || roleUser) {
+                users = await User.find({ email: { "$regex": getEmail }, role: { "$regex": roleUser } });
+            } else {
+                users = await User.find({});
+            }
             let totalUser = users.length;
             totalPage = (totalUser % limit) === 0 ? (totalUser / limit) : (parseInt(totalUser / limit) + 1)
         } else {
