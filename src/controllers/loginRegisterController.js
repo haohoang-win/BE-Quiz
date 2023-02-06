@@ -41,15 +41,12 @@ const handleLogin = async (req, res) => {
         let data = await handleUserLogin(req.body)
         // set cookie
         if (data && data.DT && data.DT.access_token) {
-            if (process.env.NODE_ENV === 'production') {
-                res.cookie('jwt', JSON.stringify(data.DT.access_token), {
-                    httpOnly: true, maxAge: 2 * 60 * 60 * 1000, signed: true, sameSite: "none", secure: true
-                })
-            } else {
-                res.cookie('jwt', JSON.stringify(data.DT.access_token), {
-                    httpOnly: true, maxAge: 2 * 60 * 60 * 1000, signed: true, sameSite: "none", secure: true
-                })
-            }
+            res.cookie('jwt', JSON.stringify(data.DT.access_token), {
+                httpOnly: true, maxAge: 2 * 60 * 60 * 1000,
+                //  signed: true, 
+                // sameSite: "none", 
+                // secure: true
+            })
         }
         return res.status(200).json({
             EM: data.EM,
