@@ -40,13 +40,13 @@ const handleLogin = async (req, res) => {
     try {
         let data = await handleUserLogin(req.body)
         // set cookie
-        console.log(data);
+        // console.log(data);
         if (data && data.DT && data.DT.access_token) {
             res.cookie('jwt', data.DT.access_token, {
                 httpOnly: true, maxAge: 2 * 60 * 60 * 1000,
                 sameSite: "none",
-                secure: true,
-                domain: "haohoang-frontend-quiz.vercel.app"
+                secure: true
+                // domain: "localhost:3000"
             })
         }
         return res.status(200).json({
