@@ -16,6 +16,7 @@ const {
     handleRegister, handleLogin, handleLogout
 } = require('../controllers/loginRegisterController')
 const { checkUserJWT } = require('../middleware/JWTAction')
+const { postSeason, getSeason, getSeasonById } = require('../controllers/seasonController')
 
 routerAPI.all('*', checkUserJWT)
 
@@ -46,6 +47,13 @@ routerAPI.get('/answers/:id', getAnswerByID);
 routerAPI.post('/answers', postAnswer);
 routerAPI.put('/answers', putAnswer);
 routerAPI.delete('/answers', deleteAnswer);
+
+routerAPI.get('/season', getSeason);
+routerAPI.get('/season/:id', getSeasonById);
+routerAPI.post('/season', postSeason);
+routerAPI.put('/questions', putQuestion);
+routerAPI.delete('/questions', deleteQuestion);
+
 
 routerAPI.post('/submit-quiz', submitQuiz);
 

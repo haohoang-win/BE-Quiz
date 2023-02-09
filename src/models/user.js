@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema(
         imageB64: String,
         role: String,
         quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'quiz' }],
-        authors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'quiz' }]
+        authors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'quiz' }],
+        classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'class' }]
     },
     {
         timestamps: true, // createdAt, updatedAt
