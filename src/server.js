@@ -31,6 +31,9 @@ configViewEngine(app);
 
 app.use(cookieParser())
 
+// config render
+app.enable('trust proxy')
+
 // khai bao route
 app.use('/v1/api/', apiRoutes);
 
