@@ -26,6 +26,9 @@ app.use(fileUpload());
 app.use(express.json()); // for json
 app.use(express.urlencoded({ extended: true })); // for form data
 
+// config render
+app.enable('trust proxy')
+
 // config template view engine
 configViewEngine(app);
 

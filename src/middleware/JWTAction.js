@@ -37,7 +37,7 @@ const extractToken = (req) => {
 const checkUserJWT = (req, res, next) => {
     if (nonSecurePath.includes(req.path)) return next();
 
-    let cookies = req.cookies;
+    let cookies = null; //req.cookies
     let tokenFromHeader = extractToken(req);
 
     if ((cookies && cookies.jwt) || tokenFromHeader) {
