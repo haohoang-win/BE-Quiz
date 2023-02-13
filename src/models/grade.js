@@ -5,7 +5,7 @@ const gradeSchema = new mongoose.Schema(
     {
         grade: String,
         season: String,
-        classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'grades' }],
+        classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'class' }],
     },
     {
         timestamps: true, // createdAt, updatedAt

@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema(
         role: String,
         quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'quiz' }],
         authors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'quiz' }],
-        classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'class' }]
+        classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'class' }],
+        seasons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'season' }]
     },
     {
         timestamps: true, // createdAt, updatedAt

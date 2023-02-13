@@ -1,7 +1,8 @@
-const { postSeasonService, getSeasonService, getSeasonByIdService, upsertSeasonService } = require("../services/seasonService");
+const { deleteManyClassService, getClassByIdService, postStudentForClassService, postSubjectTeacherForClassService } = require("../services/classService");
 
-const getSeason = async (req, res) => {
-    let data = await getSeasonService(req.query);
+const getClassById = async (req, res) => {
+    let id = req.params.id
+    let data = await getClassByIdService(id, req.query);
     if (data) {
         return res.status(200).json({
             EC: data.EC,
@@ -17,8 +18,8 @@ const getSeason = async (req, res) => {
     }
 }
 
-const getSeasonById = async (req, res) => {
-    let data = await getSeasonByIdService(req.params.id);
+const deleteManyClass = async (req, res) => {
+    let data = await deleteManyClassService(req.body.arrId);
     if (data) {
         return res.status(200).json({
             EC: data.EC,
@@ -34,8 +35,8 @@ const getSeasonById = async (req, res) => {
     }
 }
 
-const postSeason = async (req, res) => {
-    let data = await postSeasonService(req.body);
+const postStudentForClass = async (req, res) => {
+    let data = await postStudentForClassService(req.body);
     if (data) {
         return res.status(200).json({
             EC: data.EC,
@@ -51,8 +52,8 @@ const postSeason = async (req, res) => {
     }
 }
 
-const upsertSeason = async (req, res) => {
-    let data = await upsertSeasonService(req.body);
+const postSubjectTeacherForClass = async (req, res) => {
+    let data = await postSubjectTeacherForClassService(req.body);
     if (data) {
         return res.status(200).json({
             EC: data.EC,
@@ -69,5 +70,5 @@ const upsertSeason = async (req, res) => {
 }
 
 module.exports = {
-    postSeason, getSeason, getSeasonById, upsertSeason
+    deleteManyClass, getClassById, postStudentForClass, postSubjectTeacherForClass
 }
