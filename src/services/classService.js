@@ -28,6 +28,32 @@ const getClassByIdService = async (id, queryString) => {
     }
 }
 
+const getClassBySeasonService = async (season, id) => {
+    try {
+        season = season.replace('-', '/')
+        let result = await Class.find({ year: season, teacherObject: id }).exec();
+        if (result) {
+            return ({
+                EC: 0,
+                DT: result,
+                EM: 'Find all class',
+            })
+        } else {
+            return ({
+                EC: 1,
+                DT: [],
+                EM: 'Cannot find class',
+            })
+        }
+    } catch (error) {
+        return {
+            EM: 'Something wrong with service',
+            EC: 1,
+            DT: []
+        }
+    }
+}
+
 const deleteManyClassService = async (arrId) => {
     try {
         if (arrId && arrId.length > 0) {
@@ -130,4 +156,4 @@ const postSubjectTeacherForClassService = async (body) => {
     }
 }
 
-module.exports = { deleteManyClassService, getClassByIdService, postStudentForClassService, postSubjectTeacherForClassService }
+module.exports = { deleteManyClassService, getClassByIdService, postStudentForClassService, postSubjectTeacherForClassService, getClassBySeasonService }

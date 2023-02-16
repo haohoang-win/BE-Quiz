@@ -5,7 +5,7 @@ const aqp = require('api-query-params');
 
 const postSeasonService = async (rawData) => {
     try {
-        const { year } = rawData;
+        const { year, dayOfStart } = rawData;
         let checkExist = await Season.findOne({ year });
         if (checkExist) {
             return ({
@@ -15,7 +15,8 @@ const postSeasonService = async (rawData) => {
             })
         } else {
             let result = await Season.create({
-                year
+                year,
+                dayOfStart
             });
             return ({
                 EC: 0,
@@ -34,8 +35,13 @@ const postSeasonService = async (rawData) => {
 
 const getSeasonService = async (queryString) => {
     try {
-        const { population } = aqp(queryString);
-        let result = await Season.find().populate(population).exec();
+        const { population, year } = aqp(queryString);
+        let result = null;
+        if (year) {
+            result = await Season.findOne({ year }).exec();
+        } else {
+            result = await Season.find().populate(population).exec();
+        }
         return ({
             EC: 0,
             DT: result,

@@ -1,8 +1,26 @@
-const { deleteManyClassService, getClassByIdService, postStudentForClassService, postSubjectTeacherForClassService } = require("../services/classService");
+const { deleteManyClassService, getClassByIdService, postStudentForClassService, postSubjectTeacherForClassService, getClassBySeasonService } = require("../services/classService");
 
 const getClassById = async (req, res) => {
     let id = req.params.id
     let data = await getClassByIdService(id, req.query);
+    if (data) {
+        return res.status(200).json({
+            EC: data.EC,
+            DT: data.DT,
+            EM: data.EM
+        })
+    } else {
+        return res.status(200).json({
+            EC: -1,
+            DT: [],
+            EM: 'Can not create a season from database'
+        })
+    }
+}
+
+const getClassBySeason = async (req, res) => {
+    let { season, id } = req.params
+    let data = await getClassBySeasonService(season, id);
     if (data) {
         return res.status(200).json({
             EC: data.EC,
@@ -70,5 +88,5 @@ const postSubjectTeacherForClass = async (req, res) => {
 }
 
 module.exports = {
-    deleteManyClass, getClassById, postStudentForClass, postSubjectTeacherForClass
+    deleteManyClass, getClassById, postStudentForClass, postSubjectTeacherForClass, getClassBySeason
 }

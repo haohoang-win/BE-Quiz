@@ -81,6 +81,7 @@ const getUserAccount = (req, res) => {
             role: req.user.role,
             username: req.user.username,
             email: req.user.email,
+            _id: req.user._id
         }
     })
 }

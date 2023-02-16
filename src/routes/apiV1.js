@@ -17,8 +17,9 @@ const {
 } = require('../controllers/loginRegisterController')
 const { checkUserJWT } = require('../middleware/JWTAction')
 const { postSeason, getSeason, getSeasonById, upsertSeason } = require('../controllers/seasonController')
-const { deleteManyClass, getClassById, postStudentForClass, postSubjectTeacherForClass } = require('../controllers/classController')
+const { deleteManyClass, getClassById, postStudentForClass, postSubjectTeacherForClass, getClassBySeason } = require('../controllers/classController')
 const { postClassOfTeacher } = require('../controllers/timeTableController')
+const { getScheduleInWeek, postScheduleForClass, getScheduleForStudent } = require('../controllers/scheduleController')
 
 routerAPI.all('*', checkUserJWT)
 
@@ -56,11 +57,16 @@ routerAPI.post('/season', postSeason);
 routerAPI.post('/upsert-season', upsertSeason);
 
 routerAPI.get('/class/:id', getClassById);
+routerAPI.get('/all-class/:season/:id', getClassBySeason);
 routerAPI.post('/class-delete-many', deleteManyClass);
 routerAPI.post('/class', postStudentForClass);
 routerAPI.post('/class-subbject-teacher', postSubjectTeacherForClass);
 
 routerAPI.post('/class-of-teacher', postClassOfTeacher);
+
+routerAPI.get('/schedule', getScheduleInWeek);
+routerAPI.get('/schedule-student', getScheduleForStudent);
+routerAPI.post('/schedule', postScheduleForClass);
 
 routerAPI.post('/submit-quiz', submitQuiz);
 

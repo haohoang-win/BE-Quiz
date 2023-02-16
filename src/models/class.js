@@ -4,6 +4,7 @@ const mongoose_delete = require('mongoose-delete');
 const classSchema = new mongoose.Schema(
     {
         name: String,
+        year: String,
         students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
         teacher: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
         teacherObject: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],

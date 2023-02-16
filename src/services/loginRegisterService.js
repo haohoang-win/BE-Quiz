@@ -71,7 +71,8 @@ const handleUserLogin = async (rawData) => {
                 let payload = {
                     email: user.email,
                     username: user.username,
-                    role: user.role
+                    role: user.role,
+                    _id: user._id
                 }
                 let token = createJWT(payload)
 
@@ -82,7 +83,8 @@ const handleUserLogin = async (rawData) => {
                         access_token: token,
                         email: user.email,
                         username: user.username,
-                        role: user.role
+                        role: user.role,
+                        _id: user._id
                     }
                 }
             }

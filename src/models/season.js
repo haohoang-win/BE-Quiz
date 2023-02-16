@@ -4,6 +4,7 @@ const mongoose_delete = require('mongoose-delete');
 const seasonSchema = new mongoose.Schema(
     {
         year: String,
+        dayOfStart: String,
         grades: [{ type: mongoose.Schema.Types.ObjectId, ref: 'grade' }],
     },
     {
